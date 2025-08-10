@@ -28,7 +28,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
 public class PluginMain implements IXposedHookLoadPackage {
     private static final String EXTERNAL_STORAGE_PATH = Environment.getExternalStorageDirectory() + "/Android/media/com.eg.android.AlipayGphone/000_HOHO_ALIPAY_SKIN";
     private static final String packageName = "com.eg.android.AlipayGphone";
-    public static volatile boolean isModuleLoaded = false;
+    public static volatile boolean isModuleLoaded = false; // 模块是否已加载
 
     public PluginMain() {
         XposedBridge.log("Now Loading HOHO`` alipay plugin...");

@@ -1,29 +1,71 @@
-apply plugin: 'com.android.application'
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android' version '1.9.0'
+}
 
 android {
-    compileSdkVersion 33
+    compileSdk 36
 
     defaultConfig {
         applicationId "im.hoho.alipayInstallB"
-        minSdkVersion 23
-        targetSdkVersion 33
+        minSdk 23
+        targetSdk 36
         versionCode 112
         versionName "2.6.1"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    // 添加Material Design组件库
+    buildFeatures {
+        viewBinding true
     }
     namespace 'im.hoho.alipayInstallB'
-    buildToolsVersion '34.0.0'
 
 }
 
 repositories {
     mavenCentral()
     maven { url "https://api.xposed.info/" }
+    // 添加Google Maven仓库以支持Kotlin插件
+    google()
 }
 
 dependencies {
+
+    //提供Kotlin扩展功能，增强Android核心库的功能
+//    implementation 'androidx.core:core-ktx:1.12.0'
+    //兼容旧版本Android的库。如果项目目标SDK较高（如36），且未使用旧版API，则可以省略
+//    implementation 'androidx.appcompat:appcompat:1.6.1'
+//    implementation 'com.google.android.material:material:1.9.0'
+    // 用于约束布局
+//    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    //单元测试框架
+//    testImplementation 'junit:junit:4.13.2'
+    //用于Android UI测试
+//    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+//    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+//
+    //支持Kotlin协程的生命周期管理
+//    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
+    //Activity的Kotlin扩展功能
+//    implementation 'androidx.activity:activity-ktx:1.7.2'
+
+    //用于处理压缩文件
     implementation 'net.lingala.zip4j:zip4j:2.11.5'
 
+    //Xposed框架的核心API，用于实现模块注入。
     compileOnly 'de.robv.android.xposed:api:82'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    //阿里巴巴的JSON解析库，用于数据序列化和反序列化
     implementation 'com.alibaba:fastjson:1.1.72.android'
+    //Material Design组件库，用于UI设计。
+    implementation 'com.google.android.material:material:1.11.0'
+
 }
