@@ -12,6 +12,83 @@
         android:orientation="vertical"
         android:padding="8dp">
 
+        <!--标题-->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            app:cardUseCompatPadding="true"
+            android:layout_marginBottom="5dp">
+            <TextView
+                android:id="@+id/tvTilete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="HOHO"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:layout_marginTop="2dp" />
+        </androidx.cardview.widget.CardView>
+
+        <!--插件加载状态-->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            app:cardUseCompatPadding="true"
+            android:layout_marginBottom="5dp">
+        <!-- 插件状态显示 -->
+        <TextView
+            android:id="@+id/tvPluginStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="插件：未加载"
+            android:textStyle="bold"
+            android:layout_marginTop="2dp" />
+    </androidx.cardview.widget.CardView>
+
+        <!-- 用户信息卡片 -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            app:cardUseCompatPadding="true"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="用户信息"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="16dp" />
+
+                <TextView
+                    android:id="@+id/tvUserId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="用户ID: 未获取到"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/tvUserName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="用户名: 未获取到"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
         <!-- 会员等级卡片 -->
         <androidx.cardview.widget.CardView
@@ -54,6 +131,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1" />
                 </LinearLayout>
+
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -238,6 +316,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:text="打开资源文件夹"
+                    android:textAllCaps="false"
+                    android:background="@color/purple_500"
+                    android:textColor="@color/white"
+                    android:layout_marginBottom="16dp"/>
+                
+                <!-- 主题管理 -->
+                <Button
+                    android:id="@+id/btnThemeManager"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:text="主题管理"
                     android:textAllCaps="false"
                     android:background="@color/purple_500"
                     android:textColor="@color/white"/>

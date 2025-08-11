@@ -40,6 +40,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <!-- 添加主题管理Activity -->
+        <activity 
+            android:name="im.hoho.alipayInstallB.ThemeManagerActivity"
+            android:exported="false"
+            android:label="主题管理" />
     </application>
 
 </manifest>
