@@ -106,11 +106,42 @@ public class ThemeManagerActivity extends Activity {
             }
             zipFile.extractAll(themeDir.getAbsolutePath());
             
+            // 优化目录结构，将嵌套的主题资源提取到正确位置
+            optimizeThemeDirectoryStructure(themeDir);
+            
             // 删除临时文件
             defaultThemeZip.delete();
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(this, "解压默认主题失败: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+    
+    /**
+     * 优化主题目录结构
+     * @param themeDir 主题目录
+     */
+    private void optimizeThemeDirectoryStructure(File themeDir) {
+        try {
+            File actualThemeDir = findActualThemeDirectory(themeDir);
+            
+            // 如果实际主题目录不是themeDir本身，则需要优化结构
+            if (!actualThemeDir.equals(themeDir)) {
+                // 创建临时目录
+                File tempDir = new File(themeDir.getParentFile(), themeDir.getName() + "_temp");
+                tempDir.mkdirs();
+                
+                // 将实际主题内容复制到临时目录
+                copyDirectory(actualThemeDir, tempDir);
+                
+                // 删除原目录
+                deleteDirectory(themeDir);
+                
+                // 重命名临时目录
+                tempDir.renameTo(themeDir);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
     
@@ -175,7 +206,12 @@ public class ThemeManagerActivity extends Activity {
             
             // 复制选中的主题到支付宝主题目录
             File sourceThemeDir = new File(THEMES_PATH, themeName);
-            copyDirectory(sourceThemeDir, targetDir);
+            
+            // 检查是否存在嵌套的资源文件夹
+            File actualThemeDir = findActualThemeDirectory(sourceThemeDir);
+            
+            // 复制实际的主题资源文件夹内容
+            copyDirectory(actualThemeDir, targetDir);
             
             // 提示用户需要重启支付宝
             Toast.makeText(this, "主题应用成功！请重启支付宝以使更改生效", Toast.LENGTH_LONG).show();
@@ -183,6 +219,38 @@ public class ThemeManagerActivity extends Activity {
             e.printStackTrace();
             Toast.makeText(this, "应用主题失败: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
+    }
+    
+    /**
+     * 查找实际的主题资源目录
+     * @param sourceDir 源主题目录
+     * @return 实际包含主题资源的目录
+     */
+    private File findActualThemeDirectory(File sourceDir) {
+        // 检查是否存在直接的资源文件
+        File[] files = sourceDir.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                // 如果目录中直接包含图片资源文件，则这就是实际的主题目录
+                if (!file.isDirectory() && file.getName().contains("#")) {
+                    return sourceDir;
+                }
+            }
+            
+            // 如果没有直接的资源文件，查找嵌套的资源目录
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    // 递归查找包含资源文件的目录
+                    File nestedDir = findActualThemeDirectory(file);
+                    if (nestedDir != sourceDir) {
+                        return nestedDir;
+                    }
+                }
+            }
+        }
+        
+        // 默认返回源目录
+        return sourceDir;
     }
     
     private String getUserId() {
