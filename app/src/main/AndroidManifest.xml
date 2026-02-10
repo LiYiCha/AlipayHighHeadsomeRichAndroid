@@ -22,7 +22,7 @@
             android:value="true" />
         <meta-data
             android:name="xposeddescription"
-            android:value="支付宝装逼模块 By HOHO`` 裘小杰" />
+            android:value="美化模块" />
         <meta-data
             android:name="xposedminversion"
             android:value="53" />
@@ -31,14 +31,30 @@
             android:name="xposedscope"
             android:resource="@array/xposed_scopes" />
 
+        <!-- 新的主页 -->
         <activity
-            android:name="im.hoho.alipayInstallB.MainActivity"
+            android:name="im.hoho.alipayInstallB.HomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- 旧的主页（保留） -->
+        <activity
+            android:name="im.hoho.alipayInstallB.MainActivity"
+            android:exported="false" />
+
+        <!-- 皮肤设置页面 -->
+        <activity
+            android:name="im.hoho.alipayInstallB.skin.SkinActivity"
+            android:exported="false" />
+
+        <!-- 主题中心页面 -->
+        <activity
+            android:name="im.hoho.alipayInstallB.theme.ThemeActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

@@ -1,7 +1,9 @@
 apply plugin: 'com.android.application'
+apply plugin: 'org.jetbrains.kotlin.android'
+apply plugin: 'org.jetbrains.kotlin.plugin.compose'
 
 android {
-    compileSdkVersion 33
+    compileSdkVersion 35
 
     defaultConfig {
         applicationId "im.hoho.alipayInstallB"
@@ -13,6 +15,19 @@ android {
     namespace 'im.hoho.alipayInstallB'
     buildToolsVersion '34.0.0'
 
+    buildFeatures {
+        compose true
+        buildConfig true
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
 }
 
 repositories {
@@ -26,4 +41,21 @@ dependencies {
     compileOnly 'de.robv.android.xposed:api:82'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.alibaba:fastjson:1.1.72.android'
+
+    // Jetpack Compose
+    def composeBom = platform('androidx.compose:compose-bom:2024.12.01')
+    implementation composeBom
+    implementation 'androidx.compose.ui:ui'
+    implementation 'androidx.compose.material3:material3'
+    implementation 'androidx.compose.ui:ui-tooling-preview'
+    implementation 'androidx.activity:activity-compose:1.9.3'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7'
+    implementation 'androidx.lifecycle:lifecycle-runtime-compose:2.8.7'
+    debugImplementation 'androidx.compose.ui:ui-tooling'
+
+    // Coil for image loading
+    implementation 'io.coil-kt:coil-compose:2.7.0'
+
+    // DocumentFile for file operations
+    implementation 'androidx.documentfile:documentfile:1.0.1'
 }
