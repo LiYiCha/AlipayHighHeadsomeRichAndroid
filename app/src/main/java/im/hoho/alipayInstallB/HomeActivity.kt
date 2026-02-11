@@ -77,20 +77,6 @@ fun HomeScreen(
     onGithubClick: () -> Unit
 ) {
     Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        "美化模块",
-                        fontWeight = FontWeight.Bold
-                    )
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.Transparent,
-                    titleContentColor = MaterialTheme.colorScheme.onBackground
-                )
-            )
-        }
     ) { paddingValues ->
         Box(
             modifier = Modifier
