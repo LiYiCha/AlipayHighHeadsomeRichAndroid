@@ -19,10 +19,10 @@ object SkinConstants {
     val ACTIVATE_FILE = "$EXTERNAL_STORAGE_PATH/actived"
 
     // 下载 URL
-    const val DOWNLOAD_URL = "https://github.com/nov30th/AlipayHighHeadsomeRichAndroid/raw/master/SD%E5%8D%A1%E8%B5%84%E6%BA%90%E6%96%87%E4%BB%B6%E5%8C%85/SD%E8%B5%84%E6%BA%90%E6%96%87%E4%BB%B6.zip"
+    const val DOWNLOAD_URL = "https://github.com/LiYiCha/AlipayHighHeadsomeRichAndroid/raw/master/SD%E5%8D%A1%E8%B5%84%E6%BA%90%E6%96%87%E4%BB%B6%E5%8C%85/SD%E8%B5%84%E6%BA%90%E6%96%87%E4%BB%B6.zip"
 
     // GitHub 仓库 URL
-    const val GITHUB_REPO_URL = "https://github.com/nov30th/AlipayHighHeadsomeRichAndroid"
+    const val GITHUB_REPO_URL = "https://github.com/LiYiCha/AlipayHighHeadsomeRichAndroid"
 
     // SharedPreferences 键
     const val PREFS_NAME = "SkinPreferences"

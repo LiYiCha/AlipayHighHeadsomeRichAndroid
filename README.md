@@ -26,7 +26,7 @@ SD资源包手动下载：[SD卡资源文件](https://github.com/LiYiCha/AlipayH
 > 如果您认为本项目有价值，请考虑在 GitHub 页面右上角点击 ⭐ Star 支持我在空余时间的持续开发。
 
 ## 📋 版本功能对照表
-
+```
 || 版本  | 核心功能                                            | 发布日期     | 兼容性支持范围                                 |
 || ----- | --------------------------------------------------- | ------------ | ---------------------------------------------- |
 || 2.2.8 | 余额宝界面优化及收益智能计算、支付码背景自定义      | 2018.06      | <=10.0.12                                      |
@@ -37,7 +37,7 @@ SD资源包手动下载：[SD卡资源文件](https://github.com/LiYiCha/AlipayH
 || 2.5.0 | 多功能整合（钻石背景、自定义皮肤、导出）            | 2023.11      | >=10.2.23, <10.6.76                            |
 || 2.6.0 | 全平台兼容版（钻石背景、自定义皮肤、导出）          | 2024.12      | >=10.2.23                                      |
 || 2.7.0 | 现代化界面 + 主题管理中心                           | 2026.02      | >=10.2.23                                      |
-
+```
 ## 🚀 皮肤设置
 
 ### 会员等级选择
@@ -88,7 +88,7 @@ SD资源包手动下载：[SD卡资源文件](https://github.com/LiYiCha/AlipayH
 通过应用界面完成所有操作，初次使用时点击"Download Resources"按钮下载必要资源包。
 
 ### 旧版手动操作模式
-- 手动下载[SD资源包](https://github.com/nov30th/AlipayHighHeadsomeRichAndroid/blob/master/SD%E5%8D%A1%E8%B5%84%E6%BA%90%E6%96%87%E4%BB%B6%E5%8C%85/SD%E8%B5%84%E6%BA%90%E6%96%87%E4%BB%B6.zip)，并将其解压至以下指定目录：
+- 手动下载[SD资源包](https://github.com/LiYiCha/AlipayHighHeadsomeRichAndroid/blob/master/SD%E5%8D%A1%E8%B5%84%E6%BA%90%E6%96%87%E4%BB%B6%E5%8C%85/SD%E8%B5%84%E6%BA%90%E6%96%87%E4%BB%B6.zip)，并将其解压至以下指定目录：
   ```
   [SD卡根目录]\Android\media\com.eg.android.AlipayGphone\
   ```

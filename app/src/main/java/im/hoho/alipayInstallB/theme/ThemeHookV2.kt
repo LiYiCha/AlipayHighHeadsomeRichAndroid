@@ -165,7 +165,7 @@ object ThemeHookV2 {
                             XposedBridge.log("[$TAG]    皮肤ID: ${themeInfo.skinId}")
                             XposedBridge.log("[$TAG]    MD5: ${themeInfo.md5}")
 
-                            // 可选：持久化到磁盘
+                            // 可选：持久化到磁盘（或者软件自动持久化）
                             // persistCacheToDisk(classLoader, cacheMap)
 
                         } catch (e: Exception) {

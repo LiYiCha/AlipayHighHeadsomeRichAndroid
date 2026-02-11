@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import im.hoho.alipayInstallB.skin.SkinActivity
 import im.hoho.alipayInstallB.theme.ThemeActivity
+import androidx.core.net.toUri
 
 /**
  * 现代化主页
@@ -59,7 +60,8 @@ class HomeActivity : ComponentActivity() {
                     },
                     onGithubClick = {
                         val intent = Intent(Intent.ACTION_VIEW).apply {
-                            data = Uri.parse("https://github.com/nov30th/AlipayHighHeadsomeRichAndroid")
+                            data =
+                                "https://github.com/LiYiCha/AlipayHighHeadsomeRichAndroid".toUri()
                         }
                         startActivity(intent)
                     }
