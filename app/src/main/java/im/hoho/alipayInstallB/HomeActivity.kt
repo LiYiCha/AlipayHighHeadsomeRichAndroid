@@ -1,14 +1,14 @@
 package im.hoho.alipayInstallB
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.*
@@ -23,9 +23,11 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.net.toUri
+import im.hoho.alipayInstallB.guide.GuideActivity
 import im.hoho.alipayInstallB.skin.SkinActivity
 import im.hoho.alipayInstallB.theme.ThemeActivity
-import androidx.core.net.toUri
+import im.hoho.alipayInstallB.ui.*
 
 /**
  * 现代化主页
@@ -37,20 +39,7 @@ class HomeActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            MaterialTheme(
-                colorScheme = lightColorScheme(
-                    primary = Color(0xFF6750A4),
-                    secondary = Color(0xFF625B71),
-                    tertiary = Color(0xFF7D5260),
-                    background = Color(0xFFFFFBFE),
-                    surface = Color(0xFFFFFBFE),
-                    onPrimary = Color.White,
-                    onSecondary = Color.White,
-                    onTertiary = Color.White,
-                    onBackground = Color(0xFF1C1B1F),
-                    onSurface = Color(0xFF1C1B1F)
-                )
-            ) {
+            AppTheme {
                 HomeScreen(
                     onSkinClick = {
                         startActivity(Intent(this, SkinActivity::class.java))
@@ -58,10 +47,12 @@ class HomeActivity : ComponentActivity() {
                     onThemeClick = {
                         startActivity(Intent(this, ThemeActivity::class.java))
                     },
+                    onGuideClick = {
+                        startActivity(Intent(this, GuideActivity::class.java))
+                    },
                     onGithubClick = {
                         val intent = Intent(Intent.ACTION_VIEW).apply {
-                            data =
-                                "https://github.com/LiYiCha/AlipayHighHeadsomeRichAndroid".toUri()
+                            data = "https://github.com/LiYiCha/AlipayHighHeadsomeRichAndroid".toUri()
                         }
                         startActivity(intent)
                     }
@@ -76,28 +67,24 @@ class HomeActivity : ComponentActivity() {
 fun HomeScreen(
     onSkinClick: () -> Unit,
     onThemeClick: () -> Unit,
+    onGuideClick: () -> Unit,
     onGithubClick: () -> Unit
 ) {
     Scaffold(
+        containerColor = Color.Transparent
     ) { paddingValues ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(
-                    Brush.verticalGradient(
-                        colors = listOf(
-                            Color(0xFFF5F5F5),
-                            Color(0xFFE8E8E8)
-                        )
-                    )
-                )
+                .background(AppBackgroundGradient)
                 .padding(paddingValues)
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
                     .padding(24.dp),
-                verticalArrangement = Arrangement.spacedBy(20.dp)
+                verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 // 欢迎卡片
                 WelcomeCard()
@@ -105,28 +92,26 @@ fun HomeScreen(
                 // 功能卡片
                 FeatureCard(
                     title = "皮肤设置",
-                    description = "自定义目标应用付款码皮肤，让你的付款码与众不同",
+                    description = "自定义付款码皮肤，让你的付款码与众不同",
                     icon = Icons.Default.Face,
-                    gradient = Brush.linearGradient(
-                        colors = listOf(
-                            Color(0xFF667eea),
-                            Color(0xFF764ba2)
-                        )
-                    ),
+                    gradient = AppSkinCardGradient,
                     onClick = onSkinClick
                 )
 
                 FeatureCard(
                     title = "主题中心",
-                    description = "管理你的主题，打造属于你的个性化的界面",
+                    description = "管理你的主题，打造属于你的个性化界面",
                     icon = Icons.Default.Settings,
-                    gradient = Brush.linearGradient(
-                        colors = listOf(
-                            Color(0xFFf093fb),
-                            Color(0xFFf5576c)
-                        )
-                    ),
+                    gradient = AppThemeCardGradient,
                     onClick = onThemeClick
+                )
+
+                FeatureCard(
+                    title = "使用说明",
+                    description = "了解模块功能与操作方法，快速上手",
+                    icon = Icons.Default.Info,
+                    gradient = AppGuideCardGradient,
+                    onClick = onGuideClick
                 )
 
                 Spacer(modifier = Modifier.weight(1f))
@@ -144,45 +129,40 @@ fun HomeScreen(
 fun WelcomeCard() {
     Card(
         modifier = Modifier
-            .fillMaxWidth()
-            .height(120.dp),
-        shape = RoundedCornerShape(20.dp),
+            .fillMaxWidth(),
+        shape = AppShapeLarge,
         colors = CardDefaults.cardColors(
-            containerColor = Color.White
+            containerColor = Color.Transparent
         ),
         elevation = CardDefaults.cardElevation(
-            defaultElevation = 4.dp
+            defaultElevation = 6.dp
         )
     ) {
         Box(
             modifier = Modifier
-                .fillMaxSize()
-                .background(
-                    Brush.horizontalGradient(
-                        colors = listOf(
-                            Color(0xFF4facfe),
-                            Color(0xFF00f2fe)
-                        )
-                    )
-                )
-                .padding(24.dp)
+                .fillMaxWidth()
+                .background(AppBannerGradient)
+                .padding(28.dp)
         ) {
-            Column(
-                verticalArrangement = Arrangement.Center
-            ) {
+            Column {
                 Text(
                     text = "欢迎使用",
-                    fontSize = 16.sp,
-                    color = Color.White.copy(alpha = 0.9f)
+                    fontSize = 15.sp,
+                    color = Color.White.copy(alpha = 0.85f)
                 )
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(6.dp))
                 Text(
                     text = "美化模块",
-                    fontSize = 24.sp,
+                    fontSize = 26.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White
                 )
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier.height(6.dp))
+                Text(
+                    text = "Version ${BuildConfig.VERSION_NAME}",
+                    fontSize = 12.sp,
+                    color = Color.White.copy(alpha = 0.7f)
+                )
             }
         }
     }
@@ -199,39 +179,38 @@ fun FeatureCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(140.dp)
             .clickable(onClick = onClick),
-        shape = RoundedCornerShape(20.dp),
+        shape = AppShapeLarge,
         colors = CardDefaults.cardColors(
-            containerColor = Color.White
+            containerColor = AppCardBackground
         ),
         elevation = CardDefaults.cardElevation(
-            defaultElevation = 4.dp
+            defaultElevation = 2.dp
         )
     ) {
         Row(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(20.dp),
+                .fillMaxWidth()
+                .padding(18.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             // 图标区域
             Box(
                 modifier = Modifier
-                    .size(80.dp)
-                    .clip(RoundedCornerShape(16.dp))
+                    .size(56.dp)
+                    .clip(AppShapeMedium)
                     .background(gradient),
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
                     imageVector = icon,
                     contentDescription = title,
-                    modifier = Modifier.size(40.dp),
+                    modifier = Modifier.size(28.dp),
                     tint = Color.White
                 )
             }
 
-            Spacer(modifier = Modifier.width(20.dp))
+            Spacer(modifier = Modifier.width(16.dp))
 
             // 文字区域
             Column(
@@ -239,15 +218,15 @@ fun FeatureCard(
             ) {
                 Text(
                     text = title,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onSurface
+                    fontSize = 17.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = AppTextPrimary
                 )
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = description,
                     fontSize = 13.sp,
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+                    color = AppTextHint,
                     lineHeight = 18.sp
                 )
             }
@@ -256,7 +235,7 @@ fun FeatureCard(
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                 contentDescription = "进入",
-                tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
+                tint = AppTextHint
             )
         }
     }
@@ -267,39 +246,32 @@ fun BottomInfo(
     onGithubClick: () -> Unit
 ) {
     Column(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // GitHub 链接
         Row(
             modifier = Modifier
-                .clip(RoundedCornerShape(12.dp))
+                .clip(AppShapeMedium)
                 .clickable(onClick = onGithubClick)
-                .padding(horizontal = 16.dp, vertical = 8.dp),
+                .padding(horizontal = 16.dp, vertical = 10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
-                imageVector = Icons.Default.Info,
+                imageVector = Icons.Default.Favorite,
                 contentDescription = "GitHub",
-                modifier = Modifier.size(20.dp),
-                tint = MaterialTheme.colorScheme.primary
+                modifier = Modifier.size(16.dp),
+                tint = AppPrimary
             )
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = Modifier.width(6.dp))
             Text(
-                text = "查看源码",
-                fontSize = 14.sp,
-                color = MaterialTheme.colorScheme.primary,
+                text = "GitHub 开源项目",
+                fontSize = 13.sp,
+                color = AppPrimary,
                 fontWeight = FontWeight.Medium
             )
         }
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        // 版本信息
-        Text(
-            text = "Version ${BuildConfig.VERSION_NAME}",
-            fontSize = 12.sp,
-            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
-        )
     }
 }

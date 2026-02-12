@@ -8,9 +8,13 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import im.hoho.alipayInstallB.theme.ThemeInfo
 import im.hoho.alipayInstallB.theme.ThemeOperation
+import im.hoho.alipayInstallB.ui.*
 
 /**
  * 操作卡片
@@ -21,7 +25,10 @@ fun OperationsCard(
     onExecute: (ThemeOperation) -> Unit
 ) {
     Card(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
+        shape = AppShapeLarge,
+        colors = CardDefaults.cardColors(containerColor = AppCardBackground),
+        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
@@ -29,7 +36,9 @@ fun OperationsCard(
         ) {
             Text(
                 text = "主题操作",
-                style = MaterialTheme.typography.titleMedium
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.SemiBold,
+                color = AppTextPrimary
             )
 
             // 导出操作
@@ -53,7 +62,7 @@ fun OperationsCard(
             Text(
                 text = "注意：操作将在下次打开付款码时自动执行",
                 style = MaterialTheme.typography.bodySmall,
-                color = androidx.compose.ui.graphics.Color(0xFF616161)
+                color = AppTextHint
             )
         }
     }
@@ -69,12 +78,20 @@ private fun OperationButton(
 ) {
     Button(
         onClick = onExecute,
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(48.dp),
+        shape = AppShapeMedium,
         colors = ButtonDefaults.buttonColors(
-            containerColor = androidx.compose.ui.graphics.Color(0xFF00BCD4)
+            containerColor = when (operation) {
+                ThemeOperation.EXPORT -> AppInfo
+                ThemeOperation.DELETE -> AppError
+                ThemeOperation.UPDATE -> AppSuccess
+            },
+            contentColor = Color.White
         )
     ) {
-        Text(operation.displayName)
+        Text(operation.displayName, fontWeight = FontWeight.Medium, fontSize = 14.sp)
     }
 }
 

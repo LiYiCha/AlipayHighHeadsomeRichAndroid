@@ -55,6 +55,11 @@
         <activity
             android:name="im.hoho.alipayInstallB.theme.ThemeActivity"
             android:exported="false" />
+
+        <!-- 使用说明页面 -->
+        <activity
+            android:name="im.hoho.alipayInstallB.guide.GuideActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

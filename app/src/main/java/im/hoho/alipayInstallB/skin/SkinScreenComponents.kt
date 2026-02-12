@@ -20,6 +20,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import im.hoho.alipayInstallB.ui.*
 
 /**
  * 操作按钮组卡片
@@ -36,8 +37,9 @@ fun OperationsCard(
 
     Card(
         modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White)
+        shape = AppShapeLarge,
+        colors = CardDefaults.cardColors(containerColor = AppCardBackground),
+        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
     ) {
         Column(
             modifier = Modifier
@@ -50,15 +52,15 @@ fun OperationsCard(
                 Icon(
                     imageVector = Icons.Default.Settings,
                     contentDescription = null,
-                    tint = Color(0xFF3FEADB),
-                    modifier = Modifier.size(24.dp)
+                    tint = AppPrimary,
+                    modifier = Modifier.size(22.dp)
                 )
-                Spacer(modifier = Modifier.width(12.dp))
+                Spacer(modifier = Modifier.width(10.dp))
                 Text(
                     text = "皮肤操作",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color(0xFF131313)
+                    fontSize = 17.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = AppTextPrimary
                 )
             }
 
@@ -85,7 +87,7 @@ fun OperationsCard(
             Text(
                 text = "点击按钮立即创建操作请求，切换到支付宝应用时自动执行",
                 fontSize = 12.sp,
-                color = Color(0xFF757575)
+                color = AppTextHint
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -115,9 +117,9 @@ private fun ActivateSkinSwitch(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(12.dp))
-            .background(Color(0xFFF5F5F5))
-            .padding(16.dp),
+            .clip(AppShapeMedium)
+            .background(AppContainerBackground)
+            .padding(14.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -128,8 +130,8 @@ private fun ActivateSkinSwitch(
             Icon(
                 imageVector = Icons.Default.Face,
                 contentDescription = null,
-                tint = if (isActivated) Color(0xFF4CAF50) else Color(0xFF9E9E9E),
-                modifier = Modifier.size(24.dp)
+                tint = if (isActivated) AppSuccess else AppTextHint,
+                modifier = Modifier.size(22.dp)
             )
             Spacer(modifier = Modifier.width(12.dp))
             Column {
@@ -137,13 +139,13 @@ private fun ActivateSkinSwitch(
                     text = "启用自定义皮肤",
                     fontSize = 15.sp,
                     fontWeight = FontWeight.Medium,
-                    color = Color(0xFF131313)
+                    color = AppTextPrimary
                 )
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier.height(3.dp))
                 Text(
                     text = if (isActivated) "自定义皮肤系统已启用" else "自定义皮肤系统已禁用",
                     fontSize = 12.sp,
-                    color = Color(0xFF757575)
+                    color = AppTextHint
                 )
             }
         }
@@ -154,9 +156,9 @@ private fun ActivateSkinSwitch(
             onCheckedChange = { onToggle() },
             colors = SwitchDefaults.colors(
                 checkedThumbColor = Color.White,
-                checkedTrackColor = Color(0xFF4CAF50),
+                checkedTrackColor = AppSuccess,
                 uncheckedThumbColor = Color.White,
-                uncheckedTrackColor = Color(0xFFBDBDBD)
+                uncheckedTrackColor = AppDivider
             )
         )
     }
@@ -174,14 +176,14 @@ private fun OperationButton(
         onClick = onExecute,
         modifier = Modifier
             .fillMaxWidth()
-            .height(64.dp),
-        shape = RoundedCornerShape(12.dp),
+            .height(60.dp),
+        shape = AppShapeMedium,
         colors = ButtonDefaults.buttonColors(
             containerColor = when (operation) {
-                SkinOperation.EXPORT -> Color(0xFF2196F3)
-                SkinOperation.DELETE -> Color(0xFFF44336)
-                SkinOperation.UPDATE -> Color(0xFF4CAF50)
-                else -> Color(0xFF9E9E9E)
+                SkinOperation.EXPORT -> AppInfo
+                SkinOperation.DELETE -> AppError
+                SkinOperation.UPDATE -> AppSuccess
+                else -> AppTextHint
             },
             contentColor = Color.White
         )
@@ -244,8 +246,9 @@ fun DownloadCard(
 ) {
     Card(
         modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White)
+        shape = AppShapeLarge,
+        colors = CardDefaults.cardColors(containerColor = AppCardBackground),
+        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
     ) {
         Column(
             modifier = Modifier
@@ -258,32 +261,32 @@ fun DownloadCard(
                 Icon(
                     imageVector = Icons.Default.Star,
                     contentDescription = null,
-                    tint = Color(0xFF2FE7D6),
-                    modifier = Modifier.size(24.dp)
+                    tint = AppAccent,
+                    modifier = Modifier.size(22.dp)
                 )
-                Spacer(modifier = Modifier.width(12.dp))
+                Spacer(modifier = Modifier.width(10.dp))
                 Text(
                     text = "资源包管理",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color(0xFF131313)
+                    fontSize = 17.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = AppTextPrimary
                 )
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(14.dp))
 
             // 下载按钮
             Button(
                 onClick = onDownload,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(56.dp),
-                shape = RoundedCornerShape(12.dp),
+                    .height(52.dp),
+                shape = AppShapeMedium,
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF00BCD4), // 鲜明的青色
-                    contentColor = Color.White, // 白色文字，高对比度
-                    disabledContainerColor = Color(0xFFE0E0E0),
-                    disabledContentColor = Color(0xFF9E9E9E)
+                    containerColor = AppPrimary,
+                    contentColor = Color.White,
+                    disabledContainerColor = AppDivider,
+                    disabledContentColor = AppTextHint
                 ),
                 enabled = downloadState !is DownloadState.Downloading
             ) {
@@ -292,24 +295,25 @@ fun DownloadCard(
                         Icon(
                             imageVector = Icons.Default.Star,
                             contentDescription = null,
-                            modifier = Modifier.size(24.dp)
+                            modifier = Modifier.size(20.dp)
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
                             text = if (isResourceInstalled) "重新下载资源包" else "下载资源包",
-                            fontSize = 16.sp,
+                            fontSize = 15.sp,
                             fontWeight = FontWeight.Medium
                         )
                     }
                     is DownloadState.Downloading -> {
                         CircularProgressIndicator(
-                            modifier = Modifier.size(24.dp),
-                            color = Color.White
+                            modifier = Modifier.size(20.dp),
+                            color = Color.White,
+                            strokeWidth = 2.dp
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
                             text = "下载中 ${downloadState.progress}%",
-                            fontSize = 16.sp,
+                            fontSize = 15.sp,
                             fontWeight = FontWeight.Medium
                         )
                     }
@@ -317,12 +321,12 @@ fun DownloadCard(
                         Icon(
                             imageVector = Icons.Default.CheckCircle,
                             contentDescription = null,
-                            modifier = Modifier.size(24.dp)
+                            modifier = Modifier.size(20.dp)
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
                             text = "下载完成",
-                            fontSize = 16.sp,
+                            fontSize = 15.sp,
                             fontWeight = FontWeight.Medium
                         )
                     }
@@ -330,12 +334,12 @@ fun DownloadCard(
                         Icon(
                             imageVector = Icons.Default.Info,
                             contentDescription = null,
-                            modifier = Modifier.size(24.dp)
+                            modifier = Modifier.size(20.dp)
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
                             text = "下载失败",
-                            fontSize = 16.sp,
+                            fontSize = 15.sp,
                             fontWeight = FontWeight.Medium
                         )
                     }
@@ -354,20 +358,20 @@ fun DownloadCard(
                         progress = (downloadState as? DownloadState.Downloading)?.progress?.div(100f) ?: 0f,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(8.dp)
-                            .clip(RoundedCornerShape(4.dp)),
-                        color = Color(0xFF00BCD4), // 鲜明的青色
-                        trackColor = Color(0xFFE0E0E0)
+                            .height(6.dp)
+                            .clip(AppShapeSmall),
+                        color = AppPrimary,
+                        trackColor = AppDivider
                     )
                 }
             }
 
             // 提示信息
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(10.dp))
             Text(
                 text = "从 GitHub 下载资源包需要 SD 卡权限",
                 fontSize = 12.sp,
-                color = Color(0xFF9E9E9E)
+                color = AppTextHint
             )
         }
     }
@@ -391,27 +395,27 @@ fun BottomActions(
             onClick = onOpenFolder,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(48.dp),
-            shape = RoundedCornerShape(12.dp),
+                .height(46.dp),
+            shape = AppShapeMedium,
             colors = ButtonDefaults.outlinedButtonColors(
-                contentColor = Color(0xFF00BCD4), // 鲜明的青色
-                disabledContentColor = Color(0xFFBDBDBD)
+                contentColor = AppPrimary,
+                disabledContentColor = AppTextHint
             ),
             border = androidx.compose.foundation.BorderStroke(
-                width = 2.dp,
-                color = if (isResourceInstalled) Color(0xFF00BCD4) else Color(0xFFE0E0E0)
+                width = 1.5.dp,
+                color = if (isResourceInstalled) AppPrimary else AppDivider
             ),
             enabled = isResourceInstalled
         ) {
             Icon(
                 imageVector = Icons.Default.Home,
                 contentDescription = null,
-                modifier = Modifier.size(20.dp)
+                modifier = Modifier.size(18.dp)
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text(
                 text = "打开资源文件夹",
-                fontSize = 15.sp
+                fontSize = 14.sp
             )
         }
 
@@ -420,19 +424,19 @@ fun BottomActions(
             onClick = onOpenGithub,
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.textButtonColors(
-                contentColor = Color(0xFF00BCD4) // 鲜明的青色
+                contentColor = AppPrimary
             )
         ) {
             Icon(
-                imageVector = Icons.Default.Info,
+                imageVector = Icons.Default.Favorite,
                 contentDescription = null,
-                modifier = Modifier.size(18.dp),
-                tint = Color(0xFF2FE7D6)
+                modifier = Modifier.size(16.dp),
+                tint = AppPrimary
             )
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = Modifier.width(6.dp))
             Text(
                 text = "查看 GitHub 项目",
-                fontSize = 14.sp,
+                fontSize = 13.sp,
                 fontWeight = FontWeight.Medium
             )
         }
@@ -441,7 +445,7 @@ fun BottomActions(
         Text(
             text = "重新打开付款码以使更改生效",
             fontSize = 12.sp,
-            color = Color(0xFF9E9E9E),
+            color = AppTextHint,
             modifier = Modifier.padding(horizontal = 16.dp)
         )
     }

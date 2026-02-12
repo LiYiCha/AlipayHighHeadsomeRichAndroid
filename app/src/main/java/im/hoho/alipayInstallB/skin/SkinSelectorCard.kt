@@ -23,6 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import im.hoho.alipayInstallB.ui.*
 
 /**
  * 皮肤选择卡片
@@ -50,11 +51,11 @@ fun SkinSelectorCard(
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(16.dp),
+        shape = AppShapeLarge,
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
+            containerColor = AppCardBackground
         ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
     ) {
         Column(
             modifier = Modifier
@@ -70,8 +71,8 @@ fun SkinSelectorCard(
                 Text(
                     text = "选择皮肤",
                     style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
-                    color = Color(0xFF131313) // 深蓝色，清晰可见
+                    fontWeight = FontWeight.SemiBold,
+                    color = AppTextPrimary
                 )
 
                 Row(
@@ -82,17 +83,17 @@ fun SkinSelectorCard(
                         onClick = onImport,
                         contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
                         colors = ButtonDefaults.filledTonalButtonColors(
-                            containerColor = Color(0xFF00BCD4), // 鲜明的青色
-                            contentColor = Color.White // 白色文字
+                            containerColor = AppPrimary,
+                            contentColor = Color.White
                         )
                     ) {
                         Icon(
                             imageVector = Icons.Default.Add,
                             contentDescription = null,
-                            modifier = Modifier.size(18.dp)
+                            modifier = Modifier.size(16.dp)
                         )
                         Spacer(modifier = Modifier.width(4.dp))
-                        Text("导入ZIP", fontWeight = FontWeight.Medium)
+                        Text("导入ZIP", fontWeight = FontWeight.Medium, fontSize = 13.sp)
                     }
 
                     // 导入目录按钮
@@ -100,26 +101,26 @@ fun SkinSelectorCard(
                         onClick = onImportDirectory,
                         contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
                         colors = ButtonDefaults.filledTonalButtonColors(
-                            containerColor = Color(0xFF00BCD4), // 鲜明的青色
-                            contentColor = Color.White // 白色文字
+                            containerColor = AppAccent,
+                            contentColor = Color.White
                         )
                     ) {
                         Icon(
                             imageVector = Icons.Default.Add,
                             contentDescription = null,
-                            modifier = Modifier.size(18.dp)
+                            modifier = Modifier.size(16.dp)
                         )
                         Spacer(modifier = Modifier.width(4.dp))
-                        Text("导入目录", fontWeight = FontWeight.Medium)
+                        Text("导入目录", fontWeight = FontWeight.Medium, fontSize = 13.sp)
                     }
 
                     TextButton(
                         onClick = onRefresh,
                         colors = ButtonDefaults.textButtonColors(
-                            contentColor = Color(0xFF00BCD4) // 鲜明的青色
+                            contentColor = AppPrimary
                         )
                     ) {
-                        Text("刷新", fontWeight = FontWeight.Medium)
+                        Text("刷新", fontWeight = FontWeight.Medium, fontSize = 13.sp)
                     }
                 }
             }
@@ -130,8 +131,8 @@ fun SkinSelectorCard(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clip(RoundedCornerShape(12.dp))
-                    .background(Color(0xFFF5F5F5)) // 浅灰色背景，区分容器
+                    .clip(AppShapeMedium)
+                    .background(AppContainerBackground)
                     .padding(12.dp)
             ) {
                 if (availableSkins.isEmpty()) {
@@ -174,31 +175,30 @@ private fun SkinItem(
     onViewDetail: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    // 选中状态使用鲜明的青色，未选中使用浅灰色
     val borderColor = if (isSelected) {
-        Color(0xFF00BCD4) // 鲜明的青色
+        AppPrimary
     } else {
-        Color(0xFFE0E0E0) // 浅灰色
+        AppDivider
     }
 
     val backgroundColor = if (isSelected) {
-        Color(0xFFE0F7FA) // 浅青色背景
+        Color(0xFFE8F8F5)
     } else {
-        Color.White
+        AppCardBackground
     }
 
     Card(
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(12.dp),
+        shape = AppShapeMedium,
         border = BorderStroke(
-            width = if (isSelected) 3.dp else 1.dp, // 选中时更粗的边框
+            width = if (isSelected) 2.dp else 1.dp,
             color = borderColor
         ),
         colors = CardDefaults.cardColors(
             containerColor = backgroundColor
         ),
         elevation = CardDefaults.cardElevation(
-            defaultElevation = if (isSelected) 4.dp else 1.dp // 选中时有阴影
+            defaultElevation = if (isSelected) 3.dp else 0.dp
         )
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
@@ -250,9 +250,9 @@ private fun SkinItem(
                     Icon(
                         imageVector = Icons.Default.CheckCircle,
                         contentDescription = "已选中",
-                        tint = Color(0xFF00BCD4), // 鲜明的青色
+                        tint = AppPrimary,
                         modifier = Modifier
-                            .size(24.dp)
+                            .size(22.dp)
                             .align(Alignment.CenterVertically)
                     )
                 }
@@ -263,9 +263,9 @@ private fun SkinItem(
                 onClick = onViewDetail,
                 modifier = Modifier
                     .align(Alignment.End)
-                    .padding(horizontal = 12.dp, vertical = 4.dp),
+                    .padding(horizontal = 12.dp, vertical = 2.dp),
                 colors = ButtonDefaults.textButtonColors(
-                    contentColor = Color(0xFF00BCD4) // 鲜明的青色
+                    contentColor = AppPrimary
                 )
             ) {
                 Text(
@@ -288,14 +288,7 @@ private fun SkinPreviewImage(
     modifier: Modifier = Modifier
 ) {
     Box(
-        modifier = modifier.background(
-            brush = Brush.verticalGradient(
-                colors = listOf(
-                    Color(0xFF1A1A1A),
-                    Color(0xFF2A2A2A)
-                )
-            )
-        ),
+        modifier = modifier.background(AppPlaceholderGradient),
         contentAlignment = Alignment.Center
     ) {
         if (previewPath != null) {

@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import im.hoho.alipayInstallB.theme.ThemeInfo
 import im.hoho.alipayInstallB.theme.ThemeViewModel
+import im.hoho.alipayInstallB.ui.*
 
 /**
  * 主题详情页面
@@ -59,7 +60,9 @@ fun ThemeDetailScreen(
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.Transparent
+                    containerColor = Color.Transparent,
+                    titleContentColor = AppTextPrimary,
+                    navigationIconContentColor = AppTextPrimary
                 )
             )
         },
@@ -68,14 +71,7 @@ fun ThemeDetailScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(
-                    brush = Brush.verticalGradient(
-                        colors = listOf(
-                            Color(0xFFF5F7FA),
-                            Color(0xFFE8EAF6)
-                        )
-                    )
-                )
+                .background(AppBackgroundGradient)
         ) {
             LazyColumn(
                 modifier = Modifier
@@ -128,9 +124,9 @@ private fun PreviewImageCard(themeInfo: ThemeInfo) {
         modifier = Modifier
             .fillMaxWidth()
             .height(200.dp),
-        shape = RoundedCornerShape(20.dp),
+        shape = AppShapeLarge,
         colors = CardDefaults.cardColors(
-            containerColor = Color.White
+            containerColor = AppCardBackground
         )
     ) {
         if (themeInfo.previewImagePath != null) {
@@ -144,20 +140,13 @@ private fun PreviewImageCard(themeInfo: ThemeInfo) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(
-                        brush = Brush.verticalGradient(
-                            colors = listOf(
-                                Color(0xFFE1D9D2),
-                                Color(0xFFD2FFFB)
-                            )
-                        )
-                    ),
+                    .background(AppPlaceholderGradient),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = "暂无预览图",
-                    fontSize = 16.sp,
-                    color = Color(0xFF424242)
+                    fontSize = 15.sp,
+                    color = AppTextHint
                 )
             }
         }
@@ -171,10 +160,11 @@ private fun PreviewImageCard(themeInfo: ThemeInfo) {
 private fun ThemeInfoCard(themeInfo: ThemeInfo) {
     Card(
         modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(20.dp),
+        shape = AppShapeLarge,
         colors = CardDefaults.cardColors(
-            containerColor = Color.White
-        )
+            containerColor = AppCardBackground
+        ),
+        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
@@ -187,13 +177,13 @@ private fun ThemeInfoCard(themeInfo: ThemeInfo) {
                 Text(
                     text = "主题名称: ",
                     style = MaterialTheme.typography.bodyMedium,
-                    color = Color(0xFF616161)
+                    color = AppTextSecondary
                 )
                 Text(
                     text = themeInfo.name,
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
-                    color = Color(0xFF131313)
+                    color = AppTextPrimary
                 )
             }
 
@@ -204,12 +194,12 @@ private fun ThemeInfoCard(themeInfo: ThemeInfo) {
                 Text(
                     text = "主题ID: ",
                     style = MaterialTheme.typography.bodyMedium,
-                    color = Color(0xFF616161)
+                    color = AppTextSecondary
                 )
                 Text(
                     text = themeInfo.description.removePrefix("主题ID: ").removePrefix("文件夹: "),
                     style = MaterialTheme.typography.bodyMedium,
-                    color = Color(0xFF424242)
+                    color = AppTextPrimary
                 )
             }
         }
@@ -223,25 +213,26 @@ private fun ThemeInfoCard(themeInfo: ThemeInfo) {
 private fun ResourceListCard(themeInfo: ThemeInfo) {
     Card(
         modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(20.dp),
+        shape = AppShapeLarge,
         colors = CardDefaults.cardColors(
-            containerColor = Color.White
-        )
+            containerColor = AppCardBackground
+        ),
+        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Text(
-                text = "📋 主题包含的资源",
+                text = "主题包含的资源",
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFF131313)
+                color = AppTextPrimary
             )
 
-            Divider(
+            HorizontalDivider(
                 modifier = Modifier.padding(vertical = 8.dp),
-                color = Color(0xFFE0E0E0)
+                color = AppDivider
             )
 
             // 资源项列表
@@ -257,7 +248,7 @@ private fun ResourceListCard(themeInfo: ThemeInfo) {
                 Text(
                     text = resource,
                     style = MaterialTheme.typography.bodyMedium,
-                    color = Color(0xFF424242),
+                    color = AppTextSecondary,
                     modifier = Modifier.padding(vertical = 4.dp)
                 )
             }
@@ -281,25 +272,29 @@ private fun ActionButtons(
         // 应用主题按钮
         Button(
             onClick = onApply,
-            modifier = Modifier.weight(1f),
+            modifier = Modifier
+                .weight(1f)
+                .height(46.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFF00BCD4)
+                containerColor = AppPrimary
             ),
-            shape = RoundedCornerShape(12.dp)
+            shape = AppShapeMedium
         ) {
-            Text("应用此主题")
+            Text("应用此主题", fontWeight = FontWeight.Medium)
         }
 
         // 删除主题按钮
         OutlinedButton(
             onClick = onDelete,
-            modifier = Modifier.weight(1f),
+            modifier = Modifier
+                .weight(1f)
+                .height(46.dp),
             colors = ButtonDefaults.outlinedButtonColors(
-                contentColor = Color(0xFFE53935)
+                contentColor = AppError
             ),
-            shape = RoundedCornerShape(12.dp)
+            shape = AppShapeMedium
         ) {
-            Text("删除主题")
+            Text("删除主题", fontWeight = FontWeight.Medium)
         }
     }
 }

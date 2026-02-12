@@ -6,9 +6,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.lightColorScheme
-import androidx.compose.ui.graphics.Color
+import im.hoho.alipayInstallB.ui.AppTheme
 
 /**
  * 皮肤详情 Activity
@@ -62,20 +60,7 @@ class SkinDetailActivity : ComponentActivity() {
 
         // 设置 Compose UI
         setContent {
-            MaterialTheme(
-                colorScheme = lightColorScheme(
-                    primary = Color(0xFFE1D9D2), // RGB 225/217/210
-                    onPrimary = Color.White,
-                    primaryContainer = Color(0xFFE8EAF6),
-                    onPrimaryContainer = Color(0xFF131313),
-                    secondary = Color(0xFFD2FFFB), // RGB 210/255/251
-                    onSecondary = Color.White,
-                    background = Color(0xFFF5F7FA),
-                    onBackground = Color.Black,
-                    surface = Color.White,
-                    onSurface = Color.Black
-                )
-            ) {
+            AppTheme {
                 SkinDetailScreen(
                     viewModel = viewModel,
                     onBack = { finish() },

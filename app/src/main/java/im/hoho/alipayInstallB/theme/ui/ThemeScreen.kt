@@ -34,6 +34,7 @@ import coil.compose.rememberAsyncImagePainter
 import im.hoho.alipayInstallB.theme.ThemeInfo
 import im.hoho.alipayInstallB.theme.ThemeOperation
 import im.hoho.alipayInstallB.theme.ThemeViewModel
+import im.hoho.alipayInstallB.ui.*
 
 /**
  * 主题中心主界面
@@ -100,7 +101,9 @@ fun ThemeScreen(
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.Transparent
+                    containerColor = Color.Transparent,
+                    titleContentColor = AppTextPrimary,
+                    navigationIconContentColor = AppTextPrimary
                 )
             )
         },
@@ -109,14 +112,7 @@ fun ThemeScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(
-                    brush = Brush.verticalGradient(
-                        colors = listOf(
-                            Color(0xFFF5F7FA),
-                            Color(0xFFE8EAF6)
-                        )
-                    )
-                )
+                .background(AppBackgroundGradient)
         ) {
             LazyColumn(
                 modifier = Modifier
@@ -143,6 +139,8 @@ fun ThemeScreen(
                 Text(
                     text = "可用主题",
                     style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.SemiBold,
+                    color = AppTextPrimary,
                     modifier = Modifier.padding(vertical = 8.dp)
                 )
             }
@@ -151,12 +149,15 @@ fun ThemeScreen(
             if (state.availableThemes.isEmpty()) {
                 item {
                     Card(
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = AppShapeLarge,
+                        colors = CardDefaults.cardColors(containerColor = AppCardBackground)
                     ) {
                         Text(
                             text = "暂无可用主题\n请导入主题包或从支付宝导出现有主题",
                             modifier = Modifier.padding(16.dp),
-                            style = MaterialTheme.typography.bodyMedium
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = AppTextSecondary
                         )
                     }
                 }
@@ -193,7 +194,7 @@ fun ThemeScreen(
                                 } else {
                                     "查看全部 ${state.availableThemes.size} 个主题 ▼"
                                 },
-                                color = Color(0xFF00BCD4)
+                                color = AppPrimary
                             )
                         }
                     }
@@ -204,12 +205,15 @@ fun ThemeScreen(
             item {
                 Button(
                     onClick = { zipPickerLauncher.launch("application/zip") },
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(48.dp),
+                    shape = AppShapeMedium,
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF00BCD4)
+                        containerColor = AppPrimary
                     )
                 ) {
-                    Text("导入主题包 (ZIP)")
+                    Text("导入主题包 (ZIP)", fontWeight = FontWeight.Medium)
                 }
             }
 
@@ -217,12 +221,15 @@ fun ThemeScreen(
             item {
                 Button(
                     onClick = { directoryPickerLauncher.launch(null) },
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(48.dp),
+                    shape = AppShapeMedium,
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF00BCD4)
+                        containerColor = AppAccent
                     )
                 ) {
-                    Text("导入主题目录")
+                    Text("导入主题目录", fontWeight = FontWeight.Medium)
                 }
             }
 
@@ -230,8 +237,9 @@ fun ThemeScreen(
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
+                    shape = AppShapeLarge,
                     colors = CardDefaults.cardColors(
-                        containerColor = Color(0xFFE3F2FD)
+                        containerColor = Color(0xFFE8F8F5)
                     )
                 ) {
                     Column(
@@ -240,7 +248,9 @@ fun ThemeScreen(
                     ) {
                         Text(
                             text = "使用说明",
-                            style = MaterialTheme.typography.titleSmall
+                            style = MaterialTheme.typography.titleSmall,
+                            fontWeight = FontWeight.SemiBold,
+                            color = AppTextPrimary
                         )
                         Text(
                             text = "1. 导出：从支付宝导出现有主题到SD卡\n" +
@@ -248,7 +258,8 @@ fun ThemeScreen(
                                     "3. 选择：点击主题卡片选择要应用的主题\n" +
                                     "4. 更新：将选中的主题推送到支付宝\n" +
                                     "5. 重启支付宝查看效果",
-                            style = MaterialTheme.typography.bodySmall
+                            style = MaterialTheme.typography.bodySmall,
+                            color = AppTextSecondary
                         )
                     }
                 }
@@ -258,8 +269,9 @@ fun ThemeScreen(
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
+                    shape = AppShapeLarge,
                     colors = CardDefaults.cardColors(
-                        containerColor = Color(0xFFFFF3E0)
+                        containerColor = Color(0xFFFFF8E1)
                     )
                 ) {
                     Column(
@@ -268,12 +280,15 @@ fun ThemeScreen(
                     ) {
                         Text(
                             text = "主题存储位置",
-                            style = MaterialTheme.typography.titleSmall
+                            style = MaterialTheme.typography.titleSmall,
+                            fontWeight = FontWeight.SemiBold,
+                            color = AppTextPrimary
                         )
                         Text(
                             text = "/storage/emulated/0/Android/media/\ncom.eg.android.AlipayGphone/\n000_HOHO_THEME_CENTER/themes",
                             style = MaterialTheme.typography.bodySmall,
-                            fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace
+                            fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace,
+                            color = AppTextSecondary
                         )
                     }
                 }
@@ -330,13 +345,13 @@ private fun ThemeItem(
             .fillMaxWidth()
             .shadow(
                 elevation = animatedElevation,
-                shape = RoundedCornerShape(20.dp),
-                spotColor = Color(0xFFD2FFFB).copy(alpha = 0.3f)
+                shape = AppShapeLarge,
+                spotColor = AppPrimary.copy(alpha = 0.2f)
             )
             .clickable(onClick = onSelect),
-        shape = RoundedCornerShape(20.dp),
+        shape = AppShapeLarge,
         colors = CardDefaults.cardColors(
-            containerColor = Color.White
+            containerColor = AppCardBackground
         )
     ) {
         Row(
@@ -360,21 +375,14 @@ private fun ThemeItem(
                 Box(
                     modifier = Modifier
                         .size(80.dp, 60.dp)
-                        .clip(RoundedCornerShape(12.dp))
-                        .background(
-                            brush = Brush.verticalGradient(
-                                colors = listOf(
-                                    Color(0xFFE1D9D2),
-                                    Color(0xFFD2FFFB)
-                                )
-                            )
-                        ),
+                        .clip(AppShapeMedium)
+                        .background(AppPlaceholderGradient),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
                         text = "主题",
                         fontSize = 12.sp,
-                        color = Color(0xFF424242)
+                        color = AppTextHint
                     )
                 }
             }
@@ -389,7 +397,7 @@ private fun ThemeItem(
                     text = theme.name,
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
-                    color = Color(0xFF131313)
+                    color = AppTextPrimary
                 )
 
                 if (theme.description.isNotEmpty()) {
@@ -397,7 +405,7 @@ private fun ThemeItem(
                     Text(
                         text = theme.description,
                         style = MaterialTheme.typography.bodySmall,
-                        color = Color(0xFF616161),
+                        color = AppTextSecondary,
                         maxLines = 2
                     )
                 }
@@ -411,7 +419,7 @@ private fun ThemeItem(
                 Icon(
                     imageVector = Icons.Default.Delete,
                     contentDescription = "删除主题",
-                    tint = Color(0xFFFF5722)
+                    tint = AppError
                 )
             }
 
@@ -420,9 +428,9 @@ private fun ThemeItem(
                 Icon(
                     imageVector = Icons.Default.CheckCircle,
                     contentDescription = "已选中",
-                    tint = Color(0xFF00BCD4),
+                    tint = AppPrimary,
                     modifier = Modifier
-                        .size(24.dp)
+                        .size(22.dp)
                         .align(Alignment.CenterVertically)
                 )
             }

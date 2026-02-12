@@ -23,6 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import im.hoho.alipayInstallB.ui.*
 
 /**
  * 皮肤详情屏幕
@@ -46,9 +47,9 @@ fun SkinDetailScreen(
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(0xFFE1D9D2), // RGB 225/217/210
-                    titleContentColor = Color(0xFF131313), // 深蓝色文字
-                    navigationIconContentColor = Color(0xFF131313) // 深蓝色图标
+                    containerColor = Color.Transparent,
+                    titleContentColor = AppTextPrimary,
+                    navigationIconContentColor = AppTextPrimary
                 )
             )
         }
@@ -57,14 +58,7 @@ fun SkinDetailScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .background(
-                    brush = Brush.verticalGradient(
-                        colors = listOf(
-                            Color(0xFFF5F7FA),
-                            Color(0xFFE8EAF6)
-                        )
-                    )
-                )
+                .background(AppBackgroundGradient)
         ) {
             if (state.error != null) {
                 // 错误状态
@@ -117,8 +111,9 @@ private fun SkinInfoCard(
 ) {
     Card(
         modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White)
+        shape = AppShapeLarge,
+        colors = CardDefaults.cardColors(containerColor = AppCardBackground),
+        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
     ) {
         Column(
             modifier = Modifier
@@ -129,7 +124,7 @@ private fun SkinInfoCard(
                 text = skinName,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFF131313)
+                color = AppTextPrimary
             )
 
             if (description.isNotEmpty()) {
@@ -137,7 +132,7 @@ private fun SkinInfoCard(
                 Text(
                     text = description,
                     fontSize = 14.sp,
-                    color = Color(0xFF757575)
+                    color = AppTextSecondary
                 )
             }
 
@@ -151,18 +146,18 @@ private fun SkinInfoCard(
                 Text(
                     text = "主题色:",
                     fontSize = 14.sp,
-                    color = Color(0xFF757575)
+                    color = AppTextSecondary
                 )
                 Box(
                     modifier = Modifier
-                        .size(24.dp)
-                        .clip(RoundedCornerShape(4.dp))
+                        .size(22.dp)
+                        .clip(AppShapeSmall)
                         .background(parseColor(themeColor))
                 )
                 Text(
                     text = themeColor,
                     fontSize = 14.sp,
-                    color = Color(0xFF757575)
+                    color = AppTextHint
                 )
             }
         }
@@ -179,8 +174,9 @@ private fun ImageItemCard(
 ) {
     Card(
         modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White)
+        shape = AppShapeLarge,
+        colors = CardDefaults.cardColors(containerColor = AppCardBackground),
+        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
     ) {
         Column(
             modifier = Modifier
@@ -196,26 +192,30 @@ private fun ImageItemCard(
                 Column {
                     Text(
                         text = image.displayName,
-                        fontSize = 16.sp,
+                        fontSize = 15.sp,
                         fontWeight = FontWeight.Medium,
-                        color = Color(0xFF131313)
+                        color = AppTextPrimary
                     )
                     Text(
                         text = image.fileName,
                         fontSize = 12.sp,
-                        color = Color(0xFF757575)
+                        color = AppTextHint
                     )
                 }
 
                 // 始终显示替换按钮，无论图片是否存在
                 FilledTonalButton(
                     onClick = onReplace,
-                    contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)
+                    contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
+                    colors = ButtonDefaults.filledTonalButtonColors(
+                        containerColor = AppPrimary,
+                        contentColor = Color.White
+                    )
                 ) {
                     Icon(
                         imageVector = Icons.Default.Edit,
                         contentDescription = null,
-                        modifier = Modifier.size(16.dp)
+                        modifier = Modifier.size(14.dp)
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(if (image.exists) "替换" else "添加", fontSize = 12.sp)
@@ -230,8 +230,8 @@ private fun ImageItemCard(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(150.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                        .background(Color(0xFFF5F5F5)),
+                        .clip(AppShapeMedium)
+                        .background(AppContainerBackground),
                     contentAlignment = Alignment.Center
                 ) {
                     AsyncImage(
@@ -246,8 +246,8 @@ private fun ImageItemCard(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(150.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                        .background(Color(0xFFF5F5F5)),
+                        .clip(AppShapeMedium)
+                        .background(AppContainerBackground),
                     contentAlignment = Alignment.Center
                 ) {
                     Column(
@@ -256,14 +256,14 @@ private fun ImageItemCard(
                         Icon(
                             imageVector = Icons.Filled.Star,
                             contentDescription = null,
-                            modifier = Modifier.size(48.dp),
-                            tint = Color(0xFFBDBDBD)
+                            modifier = Modifier.size(40.dp),
+                            tint = AppTextHint
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
                             text = "图片不存在",
-                            fontSize = 14.sp,
-                            color = Color(0xFF757575)
+                            fontSize = 13.sp,
+                            color = AppTextHint
                         )
                     }
                 }

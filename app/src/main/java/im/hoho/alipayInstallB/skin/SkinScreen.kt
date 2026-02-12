@@ -23,6 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import im.hoho.alipayInstallB.BuildConfig
+import im.hoho.alipayInstallB.ui.*
 import java.io.File
 
 /**
@@ -45,14 +46,7 @@ fun SkinScreen(viewModel: SkinViewModel) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                brush = Brush.verticalGradient(
-                    colors = listOf(
-                        Color(0xFFF5F7FA),
-                        Color(0xFFE8EAF6)
-                    )
-                )
-            )
+            .background(AppBackgroundGradient)
     ) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
@@ -163,19 +157,27 @@ fun SkinScreen(viewModel: SkinViewModel) {
 private fun PrivacyDialog(onDismiss: () -> Unit) {
     AlertDialog(
         onDismissRequest = { },
-        title = { Text("隐私说明") },
+        title = {
+            Text(
+                "隐私说明",
+                color = AppTextPrimary,
+                fontWeight = FontWeight.Bold
+            )
+        },
         text = {
             Text(
                 "本应用不会收集、不会上传任何用户信息或使用数据。\n\n" +
                         "应用仅在本地运行，不会与任何服务器通信（除非您主动点击\"下载资源包\"按钮从 Github 下载资源）。\n\n" +
-                        "所有操作均在您的设备本地完成，请放心使用。"
+                        "所有操作均在您的设备本地完成，请放心使用。",
+                color = AppTextSecondary
             )
         },
         confirmButton = {
             TextButton(onClick = onDismiss) {
-                Text("我知道了",color =  MaterialTheme.colorScheme.primary,)
+                Text("我知道了", color = AppPrimary, fontWeight = FontWeight.Medium)
             }
-        }
+        },
+        shape = AppShapeLarge
     )
 }
 
@@ -187,29 +189,22 @@ private fun TopHeader() {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(20.dp))
-            .background(
-                brush = Brush.horizontalGradient(
-                    colors = listOf(
-                        Color(0xFFE1D9D2), // RGB 225/217/210
-                        Color(0xFFD2FFFB)  // RGB 210/255/251
-                    )
-                )
-            )
+            .clip(AppShapeLarge)
+            .background(AppBannerGradient)
             .padding(24.dp)
     ) {
         Column {
             Text(
                 text = "皮肤管理",
-                fontSize = 28.sp,
+                fontSize = 26.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFF131313) // 深蓝色，在浅色背景上清晰可见
+                color = Color.White
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = "自定义支付宝付款码皮肤",
                 fontSize = 14.sp,
-                color = Color(0xFF424242) // 深灰色
+                color = Color.White.copy(alpha = 0.85f)
             )
         }
     }
@@ -222,27 +217,28 @@ private fun TopHeader() {
 private fun VersionCard() {
     Card(
         modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White)
+        shape = AppShapeMedium,
+        colors = CardDefaults.cardColors(containerColor = AppCardBackground),
+        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(14.dp),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
                 imageVector = Icons.Default.Info,
                 contentDescription = null,
-                tint = Color(0xFF2FE7D6),
-                modifier = Modifier.size(20.dp)
+                tint = AppPrimary,
+                modifier = Modifier.size(18.dp)
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text(
                 text = "Version: ${BuildConfig.VERSION_NAME}",
-                fontSize = 14.sp,
-                color = Color(0xFF616161)
+                fontSize = 13.sp,
+                color = AppTextHint
             )
         }
     }
@@ -260,8 +256,9 @@ private fun MemberGradeCard(
 
     Card(
         modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White)
+        shape = AppShapeLarge,
+        colors = CardDefaults.cardColors(containerColor = AppCardBackground),
+        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
     ) {
         Column(
             modifier = Modifier
@@ -274,28 +271,28 @@ private fun MemberGradeCard(
                 Icon(
                     imageVector = Icons.Default.Star,
                     contentDescription = null,
-                    tint = Color(0xFFFFD700),
-                    modifier = Modifier.size(24.dp)
+                    tint = AppWarning,
+                    modifier = Modifier.size(22.dp)
                 )
-                Spacer(modifier = Modifier.width(12.dp))
+                Spacer(modifier = Modifier.width(10.dp))
                 Text(
                     text = "会员等级",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color(0xFF131313)
+                    fontSize = 17.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = AppTextPrimary
                 )
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(14.dp))
 
             // 下拉选择器
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clip(RoundedCornerShape(12.dp))
-                    .background(Color(0xFFF5F5F5))
+                    .clip(AppShapeMedium)
+                    .background(AppContainerBackground)
                     .clickable { expanded = true }
-                    .padding(16.dp)
+                    .padding(14.dp)
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -304,13 +301,13 @@ private fun MemberGradeCard(
                 ) {
                     Text(
                         text = selectedGrade.displayName,
-                        fontSize = 16.sp,
-                        color = Color(0xFF131313)
+                        fontSize = 15.sp,
+                        color = AppTextPrimary
                     )
                     Icon(
                         imageVector = if (expanded) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
                         contentDescription = null,
-                        tint = Color(0xFF7E57C2)
+                        tint = AppPrimary
                     )
                 }
 

@@ -3,11 +3,8 @@ package im.hoho.alipayInstallB.theme
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.ui.Modifier
 import im.hoho.alipayInstallB.theme.ui.ThemeScreen
+import im.hoho.alipayInstallB.ui.AppTheme
 
 /**
  * 主题中心 Activity
@@ -24,16 +21,11 @@ class ThemeActivity : ComponentActivity() {
         val viewModel = ThemeViewModel(repository)
 
         setContent {
-            MaterialTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    ThemeScreen(
-                        viewModel = viewModel,
-                        onBack = { finish() }
-                    )
-                }
+            AppTheme {
+                ThemeScreen(
+                    viewModel = viewModel,
+                    onBack = { finish() }
+                )
             }
         }
     }
